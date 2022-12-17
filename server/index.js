@@ -251,7 +251,7 @@ app.post("/Discount", async (req, res) => {
         const body = db.collection('Giảm Giá').doc();
 
         const item = {
-            HinhGG: HinhGG,
+           
             TenGG: TenGG,
             MucGG: MucGG,
         }
@@ -296,6 +296,30 @@ app.delete("/deleteDiscount/:docId", async (req, res) => {
         db.collection('Giảm Giá').doc(docId).delete()
         res.status(200).send({
             message: 'successful',
+        })
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+});
+// tai khoan
+app.post("/register", async (req, res) => {
+    const { Hoten, DiaChi, Email } = req.body;
+
+    try {
+        const body = db.collection('Tài khoản').doc();
+
+        const item = {
+            Hoten:Hoten,
+            DiaChi: DiaChi,
+            Email: Email,
+        }
+        console.log('add', item)
+
+        body.set(item);
+
+        res.status(200).send({
+            message: 'successful',
+            data: item
         })
     } catch (error) {
         res.status(500).json({ message: error });

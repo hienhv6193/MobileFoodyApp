@@ -2,8 +2,9 @@ import { Text, View, StyleSheet, TextInput, TouchableOpacity, ImageBackground } 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from 'react';
-import { Alert } from 'react-native';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { postFood } from '../../../redux/actions/accountAction';
 const Register = ({
     navigation,
 }) => {
@@ -12,12 +13,23 @@ const Register = ({
     const[diaChi,setDiachi]=useState('')
     const[password,setPassword]=useState('')
     const auth = getAuth();
-
+    const db = useSelector(store => store.Account)
+    const dispatch = useDispatch();
+    const regist = () => {
+        let newAcc = {
+            Hoten: name,
+            DiaChi: diaChi,
+            Email:email
+        }
+        dispatch(postFood(newAcc));
+       register();
+    }
     const register=()=>{
     createUserWithEmailAndPassword(auth,email,password)
     .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
+        navigation.navigate('Login')
   })
   .catch(error => {
     if (error.code === 'auth/email-already-in-use') {
@@ -44,13 +56,18 @@ const Register = ({
                     Đăng ký
                 </Text>
                 <View style={styles.formContainer}>
-                    {/* <View style={styles.inputContainer}>
+                    <View style={styles.inputContainer}>
                         <TextInput placeholder='Họ và tên' style={styles.inputText} onChangeText={(text) => {
                                 setName(text)
                             }}
                           />
-                    </View> */}
-                    
+                    </View>
+                    <View style={styles.inputContainer}>
+                        <TextInput onChangeText={(text) => {
+                                setDiachi(text)
+                            }}
+                           placeholder='Địa chỉ' style={styles.inputText}/>
+                    </View>
                     <View style={styles.inputContainer}>
                         <TextInput placeholder='Email'onChangeText={(text) => {
                                 setEmail(text)
@@ -58,12 +75,7 @@ const Register = ({
                            style={styles.inputText}/>
                     </View>
 
-                    {/* <View style={styles.inputContainer}>
-                        <TextInput onChangeText={(text) => {
-                                setDiachi(text)
-                            }}
-                           placeholder='Địa chỉ' style={styles.inputText}/>
-                    </View> */}
+                   
                     
                     <View style={styles.inputContainer}>
                         <TextInput placeholder='Mật khẩu' secureTextEntry={true} onChangeText={(text) => {
@@ -75,7 +87,7 @@ const Register = ({
                         <TextInput placeholder='Xác nhận mật khẩu' style={styles.inputText}/>
                     </View> */}
                     
-                    <TouchableOpacity style={styles.btn} onPress={() => register()}>
+                    <TouchableOpacity style={styles.btn} onPress={() => regist()}>
                         <Text style={styles.btnTxt} >Đăng ký</Text>
                     </TouchableOpacity>
                 </View>
