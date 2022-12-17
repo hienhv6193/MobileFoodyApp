@@ -1,7 +1,7 @@
 node_modules/
 .expo/
 dist/
-keys/
+keys/serviceAccountKey.json
 npm-debug.*
 *.jks
 *.p8
