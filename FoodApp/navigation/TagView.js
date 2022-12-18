@@ -60,7 +60,7 @@ function HomeDrawer() {
                 drawerIcon: ({ size }) => <Ionicons name='home-outline' color='#000' size={size} />
             }} />
             <Drawer.Screen name="Login" component={Login} options={{
-                headerShown:false,
+               
                 title: "Đăng nhập",
                 drawerIcon: ({ size }) => <Icon name='users' color='#000' size={size} />
             }} />

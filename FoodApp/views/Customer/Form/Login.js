@@ -37,15 +37,9 @@ const Login = ({ navigation, }) => {
             .catch((error) => {
                 alert(error)
             })
-        navigation.navigate("HomeCategory")
+        navigation.navigate("HomeAdmin")
     }
-    const logOut = () => {
-        signOut(auth).then(() => {
-            // Sign-out successful.
-        }).catch((error) => {
-            // An error happened.
-        });
-    }
+    
 
     const login = () => {
         signInWithEmailAndPassword(auth, email, password)
@@ -53,7 +47,7 @@ const Login = ({ navigation, }) => {
                 // Signed in 
                 const user = userCredential.user;
 
-                navigation.navigate("HomeCategory")
+                navigation.navigate("HomeAdmin")
                 // ...
             })
             .catch((error) => {
@@ -61,6 +55,7 @@ const Login = ({ navigation, }) => {
                     setValidPhone(false)
                     console.log('That email address is invalid!');
                 }
+                
             });
     }
 
@@ -80,6 +75,9 @@ const Login = ({ navigation, }) => {
     }
 
     return (
+         (auth.currentUser==null)?
+
+        
         <View style={styles.loginContainer}>
             <ImageBackground
                 source={{ uri: 'https://img.freepik.com/premium-photo/asian-tea-concept-cup-tea-teapot-with-green-tea-dry-leaves-view-from-space-text-dark-stone-background_76790-624.jpg?w=996' }}
@@ -145,6 +143,13 @@ const Login = ({ navigation, }) => {
                 </View>
             </ImageBackground>
         </View>
+         :
+         <View style={{backgroundColor:'#000',justifyContent:'center',alignItems:'center',height:'100%'}}>
+         <Text style={{color:'#fff',fontSize:35,fontWeight:'bold'}}>
+             Bạn đã đăng nhập
+         </Text>
+        
+         </View>
     );
 }
 
