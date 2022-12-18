@@ -1,12 +1,24 @@
+import { getAuth,signOut} from 'firebase/auth';
 import React from 'react';
 import {StyleSheet ,Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
+
 const Profile = ({navigation,}) => {
+    
+    const auth =getAuth();
+   
+    const logOut = () => {
+        signOut(auth).then(() => {
+            navigation.navigate('Login')
+        }).catch((error) => {
+            // An error happened.
+        });
+    }
     const HeaderComponent = () => {
         return(
             <View style={styles.view}>
-                <Text style={styles.tk}>Tài khoản</Text>
+                <Text style={styles.tk}></Text>
             </View>
         )
     }
@@ -54,7 +66,7 @@ const Profile = ({navigation,}) => {
                     <View style={{flex:1}} />
                         <Icon name='chevron-right' size={20} color={'black'} style={{paddingEnd: 10,opacity:0.5}}/>
                 </TouchableOpacity>
-                <TouchableOpacity style={{flexDirection:'row',paddingVertical:10}}>
+                <TouchableOpacity style={{flexDirection:'row',paddingVertical:10}} onPress={()=>logOut() }>
                     <Icon name='sign-out-alt' size={20} color={'black'} style={{marginStart:10,paddingTop: 3}}/>
                     <Text style={styles.signout}>Đăng xuất</Text>
                     <View style={{flex:1}} />
